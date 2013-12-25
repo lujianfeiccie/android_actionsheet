@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				Toast.makeText(MainActivity.this, "Item2", Toast.LENGTH_SHORT).show();
 			}
 		},R.drawable.popup_window_btn2_style,
-		R.color.popup_window_text2_style);
+		R.color.popup_window_text2_style,30);
 	}
 
 	@Override

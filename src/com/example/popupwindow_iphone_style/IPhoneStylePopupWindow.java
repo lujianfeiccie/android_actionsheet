@@ -39,19 +39,21 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 	private int marginTop = 30;
 	private int view_marginTop = 50;
 	private int count = 0; //button ÊýÁ¿
-	private int textSize = 20;
+	private int _textSize = 20;
 	public void addButton(String title,OnClickListener listener){
-		++count;
 		addButton(title,listener,0,0);
 	}
 	public void addButton(String title,final OnClickListener listener,int shapeResId,int textColorResId
 			){
+		addButton(title,listener,shapeResId,textColorResId,0);
+	}
+	public void addButton(String title,final OnClickListener listener,int shapeResId,int textColorResId,
+			int textSize){
 		Button bt = new Button(context);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		bt.setLayoutParams(params);
 		bt.setText(title);
-		bt.setTextSize(textSize);
 		bt.setOnClickListener(listener);
 		if(shapeResId != 0){
 			bt.setBackgroundResource(shapeResId);
@@ -66,6 +68,11 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 			ColorStateList cs1 = (ColorStateList)context.getResources().getColorStateList(R.color.popup_window_text1_style);
 			bt.setTextColor(cs1);
 		}
+		if(textSize !=0 ){
+			bt.setTextSize(textSize);
+		}else{
+			bt.setTextSize(this._textSize);
+		}
 		if(count==1){
 			params.setMargins(marginLeft,view_marginTop, marginRight,0);
 		}else{
@@ -73,6 +80,7 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		}
 		//bt.setPadding(paddingLeft, paddingRight, 0, 0);
 		sheetView.addView(bt);
+		++count;
 	}
 	public IPhoneStylePopupWindow(Activity context) {
 		super(context);
