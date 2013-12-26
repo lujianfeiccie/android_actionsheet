@@ -25,7 +25,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		bt_bottom.setOnClickListener(this);
 		
 		popup_window = new IPhoneStylePopupWindow(this);
-		
+		popup_window.setTitle("Title");
 		popup_window.addButton("Item1",new OnItemClickListener() {
 			@Override
 			public void itemClick(View v) {

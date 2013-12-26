@@ -3,8 +3,10 @@ package com.example.popupwindow_iphone_style;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 /*
 版权所有：版权所有(C)2013，固派软件
@@ -34,13 +37,11 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 	private View mMenuView;
 	private LinearLayout sheetView; 
 	private Context context;
-	private int marginLeft = 50;
-	private int marginRight = 50;
-	private int marginTop = 30;
-	private int view_marginTop = 50;
-	private int count = 0; //button 数量
+	private int marginBottom = 30;
+	private int padding = 20;
 	private int _textSize = 20;
-	
+	private int _titleTextColor = Color.WHITE;
+	TextView txt_title;
 	OnItemClickListener itemClickListener = null;
 	
 	public void addButton(String title,OnItemClickListener listener){
@@ -84,14 +85,26 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		}else{
 			bt.setTextSize(this._textSize);
 		}
-		++count;
-		if(count==1){
-			params.setMargins(marginLeft,view_marginTop, marginRight,0);
-		}else{
-			params.setMargins(marginLeft,marginTop, marginRight,0);
-		}
-		//bt.setPadding(paddingLeft, paddingRight, 0, 0);
+		params.setMargins(0, 0, 0,marginBottom);
 		sheetView.addView(bt);
+	}
+	void addTitle(){
+		txt_title = new TextView(context);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT);
+		
+		txt_title.setGravity(Gravity.CENTER_HORIZONTAL);
+		params.setMargins(0,0 , 0, marginBottom);
+		txt_title.setLayoutParams(params);
+		txt_title.setText("");
+		txt_title.setTextColor(_titleTextColor);
+		txt_title.setTextSize(_textSize);
+		txt_title.setVisibility(View.GONE);
+		sheetView.addView(txt_title);
+	}
+	public void setTitle(String title){
+		txt_title.setText(title);
+		txt_title.setVisibility(View.VISIBLE);
 	}
 	public IPhoneStylePopupWindow(Activity context) {
 		super(context);
@@ -102,7 +115,7 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 				null);
 		
 		sheetView = (LinearLayout)mMenuView.findViewById(R.id.sheetView);
-		
+		sheetView.setPadding(padding, padding, padding, padding);
 		// 设置SelectPicPopupWindow的View
 		this.setContentView(mMenuView);
 		// 设置SelectPicPopupWindow弹出窗体的宽
@@ -131,6 +144,7 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 				return true;
 			}
 		});
+		addTitle();
 	}
 	public interface OnItemClickListener{
 		void itemClick(View v);
