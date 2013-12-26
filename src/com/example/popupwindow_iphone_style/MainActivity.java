@@ -1,5 +1,7 @@
 package com.example.popupwindow_iphone_style;
 
+import com.example.popupwindow_iphone_style.IPhoneStylePopupWindow.OnItemClickListener;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -24,20 +26,28 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 		popup_window = new IPhoneStylePopupWindow(this);
 		
-		popup_window.addButton("Item1",new OnClickListener() {
+		popup_window.addButton("Item1",new OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void itemClick(View v) {
 				Toast.makeText(MainActivity.this, "Item1", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
-		popup_window.addButton("Item2",new OnClickListener() {
+		popup_window.addButton("Item2",new OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void itemClick(View v) {
 				Toast.makeText(MainActivity.this, "Item2", Toast.LENGTH_SHORT).show();
 			}
 		},R.drawable.popup_window_btn2_style,
 		R.color.popup_window_text2_style,30);
+
+		popup_window.addButton("Item3",new OnItemClickListener() {
+			@Override
+			public void itemClick(View v) {
+				Toast.makeText(MainActivity.this, "Item3", Toast.LENGTH_SHORT).show();
+			}
+		},R.drawable.popup_window_btn2_style,
+		R.color.popup_window_text2_style);
 	}
 
 	@Override

@@ -40,21 +40,32 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 	private int view_marginTop = 50;
 	private int count = 0; //button 数量
 	private int _textSize = 20;
-	public void addButton(String title,OnClickListener listener){
+	
+	OnItemClickListener itemClickListener = null;
+	
+	public void addButton(String title,OnItemClickListener listener){
 		addButton(title,listener,0,0);
 	}
-	public void addButton(String title,final OnClickListener listener,int shapeResId,int textColorResId
+	public void addButton(String title,final OnItemClickListener listener,int shapeResId,int textColorResId
 			){
 		addButton(title,listener,shapeResId,textColorResId,0);
 	}
-	public void addButton(String title,final OnClickListener listener,int shapeResId,int textColorResId,
+	public void addButton(String title,final OnItemClickListener listener,int shapeResId,int textColorResId,
 			int textSize){
 		Button bt = new Button(context);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		bt.setLayoutParams(params);
 		bt.setText(title);
-		bt.setOnClickListener(listener);
+		bt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				IPhoneStylePopupWindow.this.dismiss();
+				if(listener!=null){
+					listener.itemClick(v);
+				}
+			}
+		});
 		if(shapeResId != 0){
 			bt.setBackgroundResource(shapeResId);
 		}
@@ -73,6 +84,7 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		}else{
 			bt.setTextSize(this._textSize);
 		}
+		++count;
 		if(count==1){
 			params.setMargins(marginLeft,view_marginTop, marginRight,0);
 		}else{
@@ -80,7 +92,6 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		}
 		//bt.setPadding(paddingLeft, paddingRight, 0, 0);
 		sheetView.addView(bt);
-		++count;
 	}
 	public IPhoneStylePopupWindow(Activity context) {
 		super(context);
@@ -92,17 +103,6 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		
 		sheetView = (LinearLayout)mMenuView.findViewById(R.id.sheetView);
 		
-//		btn_cancel = (Button) mMenuView.findViewById(R.id.btn_cancel);
-//		// 取消按钮
-//		btn_cancel.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				// 销毁弹出框
-//				dismiss();
-//			}
-//		});
-		// 设置按钮监听
-		//btn_take_photo.setOnClickListener(itemsOnClick);
-		//btn_pick_photo.setOnClickListener(itemsOnClick);
 		// 设置SelectPicPopupWindow的View
 		this.setContentView(mMenuView);
 		// 设置SelectPicPopupWindow弹出窗体的宽
@@ -132,7 +132,9 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 			}
 		});
 	}
-
+	public interface OnItemClickListener{
+		void itemClick(View v);
+	}
 	void log(String msg) {
 		Log.d(getClass().getSimpleName(), msg);
 	}
