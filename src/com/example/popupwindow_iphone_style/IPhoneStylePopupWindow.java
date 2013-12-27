@@ -103,7 +103,15 @@ public class IPhoneStylePopupWindow extends PopupWindow {
 		sheetView.addView(txt_title);
 	}
 	public void setTitle(String title){
+		setTitle(title,0);
+	}
+	public void setTitle(String title,int color){
 		txt_title.setText(title);
+		if(color==0){
+			txt_title.setTextColor(_titleTextColor);
+		}else{
+			txt_title.setTextColor(color);
+		}
 		txt_title.setVisibility(View.VISIBLE);
 	}
 	public IPhoneStylePopupWindow(Activity context) {
